@@ -48,14 +48,10 @@ var factorial = function(n) {
 */
 
 var factorial = function(n) {
-  if (n < 0) {    //if n is negative, returns null
-    return null;
-  }   
-  if (n === 0) {  //base case: when factorial(0) = 1
-    return 1;
-  } else {
-    return n * factorial(n - 1);  //recursion
+  if (n === 1){
+    return n
   }
+  return n * factorial(n-1)
 };
 
 
@@ -215,8 +211,13 @@ Base Case:
 Recursion:
 
 */
-
 var range = function(x, y) {
+  for (var i=x+1; i<y; i++){
+    console.log(i)
+  }
+
+
+
 };
 
 // 7. Compute the exponent of a number.
@@ -225,14 +226,18 @@ var range = function(x, y) {
 // exponent(4,3); // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
 /*
-Input:
-Output:
-Base Case:
+
+Base Case: 
+
 Recursion:
 
 */
 
 var exponent = function(base, exp) {
+  if (exp === 0){
+    return 1
+  }
+
 };
 
 // 8. Determine if a number is a power of two.
@@ -240,14 +245,23 @@ var exponent = function(base, exp) {
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
 /*
-Input:
-Output:
-Base Case:
-Recursion:
 
+Base Case:
+  We are gonna need to check if the value of n is equal to 2 or 1
+
+Recursion:
+  Need to do recursion to keep dividing n/2 until we get to either 2 or 1 and if we don't
+  then its not a power of 2
 */
 
 var powerOfTwo = function(n) {
+  if (n === 2 || n === 1){
+    return true
+  }
+  if (n >= 2){
+    return powerOfTwo(n/2)
+  }
+  return false
 };
 
 
@@ -269,25 +283,39 @@ Recursion: str += string reverse(string.slice(-1))
 'gnirts'
 */
 
-var reverseString = function(string) {
-   var str = '';
-   if ( string.length === 0 ) {    
-          return str;  
-   }  
-      return str += reverseString(string.substr(1)) + string[0];
+var reverse = function(string) {
+  if (string.length === 1){
+    return string
+  }
+  return reverse(string.slice(1)) + string[0]
 }
 
 
 // 10. Write a function that determines if a string is a palindrome.
 /*
-Input: s
-Output:
 Base Case: 
+  -If the length of the string is either 0 or 1 then true. The slice should
+   cut down the length of the string. But if its an odd number then we the 
+   length may be one and if it is then we return true
 Recursion: 
-
+  - We need to cut down the length of the string, we can do this by slicing
+    the string. But we first need a way to start this recursion and we can do
+    this by checking if the first index equals the last index, if it does
+    then the recursion can start
+  - If it doesn't we return false
 */
 
-var palindrome = function(string) {
+
+var palindrome = function(str) {
+   str = str.replace(/( )/, '')
+   str = str.toLowerCase()
+   if (str.length === 1 || str.length == 0){
+        return true
+    }
+    if (str[0] === str[str.length-1]){
+        return palindrome( str.slice(1, str.length-1) )
+    }
+    return false
 };
 
 // 11. Write a function that returns the remainder of x divided by y without using the

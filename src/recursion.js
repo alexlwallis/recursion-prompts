@@ -48,8 +48,11 @@ var factorial = function(n) {
 */
 
 var factorial = function(n) {
-  if (n === 1){
-    return n
+  if (n<0){
+    return null
+  }
+  if (n === 0){
+    return 1
   }
   return n * factorial(n-1)
 };
@@ -94,32 +97,11 @@ var sum = function(array) {
 // 3. Sum all numbers in an array containing nested arrays.
 // arraySum([1,[2,3],[[4]],5]); // 15
 /*
-Input: Nested Array
-Output: Number (sum)
 
-Notes:
-repeating: adding numbers in array
-
-[1,[2,3],[[4]],5]
-1 + [[2,3],[[4]],5]
-1 + 5 + [[4], 5]
-1 + 5 + 4 + [5]
-1 + 5 + 4 + 5 = 15
-
-if element is an array, flatten?
-
-Base Case: array.length === 0, return 0
+  Base Case: if 
 
 */
 var arraySum = function(array) {
-  // var sum = 0
-  //if the array's length === 0
-    //return 0
-  
-  //for loop thorugh array
-    //if element is an array
-      //return arraySum(array[i])
-    //sum += array[i]
   var sum = 0; 
   if(array.length === 0) {
     return 0; 
@@ -133,26 +115,6 @@ var arraySum = function(array) {
   }
   return sum
 }
-
-  //return arraySum() -- recursion thru func calling itself
-  // Empty result variable set to 0 
-  // array.foreach (enters into nested array)
-  // array.forEach(function(element) 
-  // if(array.isArray(element))
-  // 
-
-  function sumItems(array) {
-    let sum = 0;
-    array.forEach((item) => {
-      if(Array.isArray(item)) {
-       sum += sumItems(item);
-      } else {
-      sum += item;
-      }
-    })
-    return sum;
-  }
-
 // 4. Check if a number is even.
 /*
 Input: Number (n)
@@ -193,13 +155,14 @@ Recursion: n + sumBelow(n - 1)
 */
 
 var sumBelow = function(n) {
-  if (n === 0) {
-    return 0;
-  } else if (n < 0) {
-    return n + sumBelow(n + 1);
-  } else {
-    return n + sumBelow(n - 1);
-  }
+  if (n === 0) { return 0; } 
+ // recursive case
+ if (n>0){
+  n = n - 1
+ } else {
+  n = n+1
+ }
+  return n + sumBelow(n);
 };
 
 // 6. Get the integers within a range (x, y).
@@ -212,11 +175,15 @@ Recursion:
 
 */
 var range = function(x, y) {
-  for (var i=x+1; i<y; i++){
-    console.log(i)
+  if (y - x === 1 || y - x === 0) {
+    return [];
   }
-
-
+  if (y>x){
+    y = y -1
+  } else {
+    y = y+1
+  }
+  return y === x ? [] : range(x,y).concat(y); 
 
 };
 
@@ -234,10 +201,22 @@ Recursion:
 */
 
 var exponent = function(base, exp) {
+  // if (exp === 0){ return 1; }
+
+  // // recursive cases!
+  // if (exp > 0){
+  //   return base*exponent(base, exp - 1)
+  // } else {
+  //   return 1(base*exponent(base, -1* exp -1))
+  // }
   if (exp === 0){
     return 1
   }
-
+  if (exp>0){
+    return base * exponent(base, exp - 1)
+  } else {
+    return 1 / (base * exponent(base, -1 * exp - 1))
+  }
 };
 
 // 8. Determine if a number is a power of two.
